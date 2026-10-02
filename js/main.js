@@ -488,48 +488,75 @@
     observeReveals(grid);
   }
 
-  /* ---------- Signature packages (full itinerary + rates) ---------- */
+  /* ---------- Signature packages: small cards, full details in a pop-up ---------- */
+  const pkgList = (items, cls) => `<ul class="${cls}">${items.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
+  const bookPackage = (p) => sendWhatsApp(`Assalam o Alaikum! I'm interested in the "${p.name}" (${p.duration}). Could you share available dates and confirm the Standard, Deluxe or Executive rate?`);
+  let pkgModal;
+  function openPackage(p) {
+    if (!pkgModal) {
+      pkgModal = document.createElement("dialog"); pkgModal.className = "modal pkg-modal"; document.body.appendChild(pkgModal);
+      pkgModal.addEventListener("click", (e) => { if (e.target === pkgModal) pkgModal.close(); });
+    }
+    pkgModal.innerHTML = `
+      <button class="modal-close" aria-label="Close">${I.close}</button>
+      <div class="pkg-modal-art" style="${bg(p.image)}" role="img" aria-label="${esc(p.name)}"><span class="days">${esc(p.duration)}</span></div>
+      <div class="modal-body pkg-body">
+        <div class="area">${esc(p.type)}</div>
+        <h3>${esc(p.name)}</h3>
+        <p class="pkg-sub">${esc(p.subtitle)}</p>
+        <p class="pkg-intro">${esc(p.intro)}</p>
+        <div class="pkg-section">
+          <h4>Package rates</h4>
+          <table class="pkg-rates"><tbody>${p.tiers.map((t) => `<tr><th scope="row">${esc(t.name)}</th><td>${esc(t.price)}</td></tr>`).join("")}</tbody></table>
+          <p class="pkg-note">${esc(p.rateNote)}</p>
+        </div>
+        <div class="pkg-section">
+          <h4>Destinations &amp; attractions</h4>
+          ${p.regions.map((r) => `<div class="pkg-region"><b>${esc(r.name)}</b><ul class="route">${r.stops.map((s) => `<li>${esc(s)}</li>`).join("")}</ul></div>`).join("")}
+        </div>
+        <div class="pkg-section pkg-cols">
+          <div><h4>Services included</h4>${pkgList(p.includes, "tick")}</div>
+          <div><h4>Not included</h4>${pkgList(p.excludes, "cross")}</div>
+        </div>
+        ${p.notes.length ? `<div class="pkg-important"><h4>Important information</h4>${pkgList(p.notes, "pkg-notes")}</div>` : ""}
+        <div class="actions">
+          <button class="btn btn-primary" type="button" data-act="wa">${I.whatsapp}Book on WhatsApp</button>
+          <a class="btn btn-ghost" href="plan.html?tour=${p.id}">Plan with this package</a>
+        </div>
+      </div>`;
+    $(".modal-close", pkgModal).addEventListener("click", () => pkgModal.close());
+    $('[data-act="wa"]', pkgModal).addEventListener("click", () => bookPackage(p));
+    typeof pkgModal.showModal === "function" ? pkgModal.showModal() : pkgModal.setAttribute("open", "");
+    pkgModal.scrollTop = 0;
+  }
   function initPackages() {
     const box = $("#package-list"); if (!box || typeof PACKAGES === "undefined") return;
-    const list = (items, cls) => `<ul class="${cls}">${items.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
     box.innerHTML = PACKAGES.map((p, i) => `
-      <article class="package reveal" style="--d:${i * 120}ms" id="pkg-${p.id}">
-        <div class="pkg-art" style="${bg(p.image)}"><span class="days">${esc(p.duration)}</span></div>
-        <div class="pkg-body">
-          <p class="kicker">${esc(p.type)}</p>
+      <article class="pkg-card reveal" style="--d:${i * 110}ms" id="pkg-${p.id}">
+        <div class="pkg-img" style="${bg(p.image)}"><span class="days">${esc(p.duration)}</span><span class="pkg-badge">Private tour</span></div>
+        <div class="pkg-card-body">
           <h3>${esc(p.name)}</h3>
-          <p class="pkg-sub">${esc(p.subtitle)}</p>
-          <p class="pkg-intro">${esc(p.intro)}</p>
-          <div class="pkg-cols">
-            <div>
-              <h4>Destinations &amp; attractions</h4>
-              ${p.regions.map((r) => `<div class="pkg-region"><b>${esc(r.name)}</b><ul class="route">${r.stops.map((s) => `<li>${esc(s)}</li>`).join("")}</ul></div>`).join("")}
-            </div>
-            <div>
-              <h4>Package rates</h4>
-              <table class="pkg-rates"><tbody>${p.tiers.map((t) => `<tr><th scope="row">${esc(t.name)}</th><td>${esc(t.price)}</td></tr>`).join("")}</tbody></table>
-              <p class="pkg-note">${esc(p.rateNote)}</p>
-            </div>
-          </div>
-          <div class="pkg-cols">
-            <div><h4>Services included</h4>${list(p.includes, "tick")}</div>
-            <div><h4>Not included</h4>${list(p.excludes, "cross")}</div>
-          </div>
-          ${p.notes.length ? `<div class="pkg-important"><h4>Important information</h4>${list(p.notes, "pkg-notes")}</div>` : ""}
+          <p class="pkg-where">${p.regions.map((r) => esc(r.name)).join(" · ")}</p>
+          <p class="pkg-incl">Prado, fuel, driver, hotels &amp; breakfast included</p>
+          <div class="pkg-from"><span>From</span> <b>${esc(p.tiers[0].price)}</b></div>
           <div class="actions">
-            <button class="btn btn-primary" type="button" data-pkg="${p.id}">${I.whatsapp}Book on WhatsApp</button>
-            <a class="btn btn-ghost" href="plan.html?tour=${p.id}">Plan with this package</a>
+            <button class="btn btn-primary" type="button" data-open="${p.id}">View details</button>
+            <button class="btn btn-ghost" type="button" data-pkg="${p.id}">${I.whatsapp}Book</button>
           </div>
         </div>
       </article>`).join("");
     box.addEventListener("click", (e) => {
-      const b = e.target.closest("[data-pkg]"); if (!b) return;
-      const p = PACKAGES.find((x) => x.id === b.dataset.pkg);
-      sendWhatsApp(`Assalam o Alaikum! I'm interested in the "${p.name}" (${p.duration}). Could you share available dates and confirm the Standard, Deluxe or Executive rate?`);
+      const o = e.target.closest("[data-open]");
+      if (o) { openPackage(PACKAGES.find((x) => x.id === o.dataset.open)); return; }
+      const b = e.target.closest("[data-pkg]");
+      if (b) bookPackage(PACKAGES.find((x) => x.id === b.dataset.pkg));
     });
     observeReveals(box);
+    // tours.html#pkg-<id> opens that package straight away
+    const hit = location.hash.startsWith("#pkg-") && PACKAGES.find((x) => "#pkg-" + x.id === location.hash);
+    if (hit) openPackage(hit);
     const why = $("#why-stat");
-    if (why && typeof WHY_STAT !== "undefined") why.innerHTML = list(WHY_STAT, "tick why-list");
+    if (why && typeof WHY_STAT !== "undefined") why.innerHTML = pkgList(WHY_STAT, "tick why-list");
   }
 
   /* ---------- Pyramid carousel of destinations ---------- */
