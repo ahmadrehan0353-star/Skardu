@@ -446,7 +446,7 @@
     const grid = $("#tour-grid"); if (!grid) return;
     const limit = parseInt(grid.dataset.limit || "0", 10);
     const list = limit ? TOURS.slice(0, limit) : TOURS;
-    const priceText = (t) => /request/i.test(t.price) ? esc(t.price) : "From " + esc(t.price);
+    const priceText = (t) => /request/i.test(t.price) ? esc(t.price) : (t.was ? `<s class="was">${esc(t.was)}</s> ` : "") + "From " + esc(t.price);
     const daysText = (t) => esc(t.days) + (/^\[|^\d/.test(t.days) ? " days" : "");
     grid.innerHTML = list.map((t, i) => `
       <article class="tour3d reveal" style="--d:${i * 110}ms" id="tour-${t.id}">
