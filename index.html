@@ -54,8 +54,8 @@
 <div>
 <p class="lead reveal right">We're a local team in Skardu. We know which lake is calm at sunrise, which road opens when, and where the best apricots are. Tell us what you love and we'll build the trip around it.</p>
 <div class="counters">
-<div class="counter reveal" style="--d:0ms"><b data-count="13">13</b><span>places to explore</span></div>
-<div class="counter reveal" style="--d:120ms"><b data-count="21">21</b><span>ready-made tours</span></div>
+<div class="counter reveal" style="--d:0ms"><b data-count="13" data-total="places">13</b><span>places to explore</span></div>
+<div class="counter reveal" style="--d:120ms"><b data-count="21" data-total="tours">21</b><span>ready-made tours</span></div>
 <div class="counter reveal" style="--d:240ms"><b data-count="12">12</b><span>months of adventures</span></div>
 </div>
 </div>
@@ -81,7 +81,7 @@
 <div class="wrap">
 <div class="section-head">
 <div><p class="kicker reveal">Spin the valley</p><h2 class="reveal" style="--d:100ms">Grab it. Turn it. Pick a place.</h2></div>
-<p class="lead reveal right">Drag the ring to spin through all 13 destinations. Tap the one in front to open it.</p>
+<p class="lead reveal right">Drag the ring to spin through all <span data-total="places">13</span> destinations. Tap the one in front to open it.</p>
 </div>
 </div>
 <div class="ring-stage reveal zoom" id="ring-stage" tabindex="0" aria-label="Carousel of destinations. Use left and right arrow keys to turn.">
@@ -98,13 +98,34 @@
 <section class="section tinted" id="explore">
 <div class="wrap">
 <div class="section-head">
-<div><p class="kicker reveal">Find your Skardu</p><h2 class="reveal" style="--d:100ms">What kind of traveller are you today?</h2></div>
+<div><p class="kicker reveal">Find your Skardu</p><h2 class="reveal" style="--d:100ms">Destinations</h2></div>
 <p class="lead reveal right">Tap a mood and the valley rearranges itself. Tap a place to open it up.</p>
 </div>
 <div class="chips reveal" id="mood-chips" role="group" aria-label="Choose a mood"></div>
 <p class="mood-line" id="mood-line"></p>
 <div class="grid" id="place-grid" data-limit="4" style="margin-top:28px"></div>
-<p style="margin-top:36px" class="reveal"><a class="btn btn-dark" href="destinations.html">See all 13 destinations</a></p>
+<p style="margin-top:36px" class="reveal"><a class="btn btn-dark" href="destinations.html"><span>See all <span data-total="places">13</span> destinations</span></a></p>
+</div>
+</section>
+
+<section class="section" id="tours">
+<div class="wrap">
+<div class="section-head">
+<div><p class="kicker reveal">Pick a journey, or let us shape one</p><h2 class="reveal" style="--d:100ms">Tours</h2></div>
+<p class="lead reveal right">Treks, lake trips and cultural tours. Tap a card to see the route.</p>
+</div>
+<div class="grid" id="tour-grid" data-ids="k2,lakes,nangma,deosai,machulo,north-group"></div>
+<p style="margin-top:36px" class="reveal"><a class="btn btn-dark" href="tours.html"><span>See all <span data-total="tours">21</span> tours</span></a></p>
+</div>
+</section>
+
+<section class="section tinted" id="packages">
+<div class="wrap">
+<div class="section-head">
+<div><p class="kicker reveal">Signature packages</p><h2 class="reveal" style="--d:100ms">Premium private tours.</h2></div>
+<p class="lead reveal right">Private Prado, fuel, driver, toll taxes, hotels and daily breakfast included. Choose a Standard, Deluxe or Executive package.</p>
+</div>
+<div class="package-list" id="package-list"></div>
 </div>
 </section>
 
@@ -132,16 +153,6 @@
 <p class="lead reveal" style="margin-top:18px;--d:200ms">Three quick questions. No wrong answers, only better holidays.</p>
 </div>
 <div class="quiz reveal zoom" id="quiz"></div>
-</div>
-</section>
-
-<section class="section tinted">
-<div class="wrap">
-<div class="section-head">
-<div><p class="kicker reveal">Our tours</p><h2 class="reveal" style="--d:100ms">Pick a journey, or let us shape one.</h2></div>
-<a class="btn btn-ghost reveal right" href="tours.html">All tours</a>
-</div>
-<div class="grid" id="tour-grid" data-limit="3"></div>
 </div>
 </section>
 

@@ -445,7 +445,9 @@
   function initTours() {
     const grid = $("#tour-grid"); if (!grid) return;
     const limit = parseInt(grid.dataset.limit || "0", 10);
-    const list = limit ? TOURS.slice(0, limit) : TOURS;
+    const ids = (grid.dataset.ids || "").split(",").map((s) => s.trim()).filter(Boolean);
+    const list = ids.length ? ids.map((id) => TOURS.find((t) => t.id === id)).filter(Boolean)
+      : limit ? TOURS.slice(0, limit) : TOURS;
     const priceText = (t) => /request/i.test(t.price) ? esc(t.price) : (t.was ? `<s class="was">${esc(t.was)}</s> ` : "") + "From " + esc(t.price);
     const daysText = (t) => esc(t.days) + (/^\[|^\d/.test(t.days) ? " days" : "");
     grid.innerHTML = list.map((t, i) => `
@@ -484,6 +486,50 @@
       sendWhatsApp(`Assalam o Alaikum! I'm interested in the "${t.name}" tour. Could you share dates and prices?`);
     });
     observeReveals(grid);
+  }
+
+  /* ---------- Signature packages (full itinerary + rates) ---------- */
+  function initPackages() {
+    const box = $("#package-list"); if (!box || typeof PACKAGES === "undefined") return;
+    const list = (items, cls) => `<ul class="${cls}">${items.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
+    box.innerHTML = PACKAGES.map((p, i) => `
+      <article class="package reveal" style="--d:${i * 120}ms" id="pkg-${p.id}">
+        <div class="pkg-art" style="${bg(p.image)}"><span class="days">${esc(p.duration)}</span></div>
+        <div class="pkg-body">
+          <p class="kicker">${esc(p.type)}</p>
+          <h3>${esc(p.name)}</h3>
+          <p class="pkg-sub">${esc(p.subtitle)}</p>
+          <p class="pkg-intro">${esc(p.intro)}</p>
+          <div class="pkg-cols">
+            <div>
+              <h4>Destinations &amp; attractions</h4>
+              ${p.regions.map((r) => `<div class="pkg-region"><b>${esc(r.name)}</b><ul class="route">${r.stops.map((s) => `<li>${esc(s)}</li>`).join("")}</ul></div>`).join("")}
+            </div>
+            <div>
+              <h4>Package rates</h4>
+              <table class="pkg-rates"><tbody>${p.tiers.map((t) => `<tr><th scope="row">${esc(t.name)}</th><td>${esc(t.price)}</td></tr>`).join("")}</tbody></table>
+              <p class="pkg-note">${esc(p.rateNote)}</p>
+            </div>
+          </div>
+          <div class="pkg-cols">
+            <div><h4>Services included</h4>${list(p.includes, "tick")}</div>
+            <div><h4>Not included</h4>${list(p.excludes, "cross")}</div>
+          </div>
+          ${p.notes.length ? `<div class="pkg-important"><h4>Important information</h4>${list(p.notes, "pkg-notes")}</div>` : ""}
+          <div class="actions">
+            <button class="btn btn-primary" type="button" data-pkg="${p.id}">${I.whatsapp}Book on WhatsApp</button>
+            <a class="btn btn-ghost" href="plan.html?tour=${p.id}">Plan with this package</a>
+          </div>
+        </div>
+      </article>`).join("");
+    box.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-pkg]"); if (!b) return;
+      const p = PACKAGES.find((x) => x.id === b.dataset.pkg);
+      sendWhatsApp(`Assalam o Alaikum! I'm interested in the "${p.name}" (${p.duration}). Could you share available dates and confirm the Standard, Deluxe or Executive rate?`);
+    });
+    observeReveals(box);
+    const why = $("#why-stat");
+    if (why && typeof WHY_STAT !== "undefined") why.innerHTML = list(WHY_STAT, "tick why-list");
   }
 
   /* ---------- Pyramid carousel of destinations ---------- */
@@ -594,7 +640,7 @@
     const row = $("#months-row"), note = $("#month-note"); if (!row) return;
     const names = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     let current = new Date().getMonth();
-    row.innerHTML = MONTHS.map((x, i) => `<button class="month" type="button" data-m="${i}" aria-pressed="${i === current}" style="${bg(SEASONS.find((s) => s.id === x.s).image)}"><span>${x.m}</span></button>`).join("");
+    row.innerHTML = MONTHS.map((x, i) => `<button class="month" type="button" data-m="${i}" aria-pressed="${i === current}" style="${bg(x.img || SEASONS.find((s) => s.id === x.s).image)}"><span>${x.m}</span></button>`).join("");
     const draw = () => {
       note.innerHTML = `<strong>${names[current]}${current === new Date().getMonth() ? " (this month)" : ""}.</strong> ${esc(MONTHS[current].note)}`;
       note.classList.remove("swap"); void note.offsetWidth; note.classList.add("swap");
@@ -668,8 +714,11 @@
     const checks = $("#place-checks");
     checks.innerHTML = PLACES.map((p) => `<label class="check"><input type="checkbox" name="places" value="${esc(p.name)}" data-img="${esc(p.image)}"${p.id === params.get("place") ? " checked" : ""}><span>${esc(p.name)}</span></label>`).join("");
     const tourSel = $("#tour-select");
-    tourSel.innerHTML = `<option value="">Not sure yet</option>` + TOURS.map((t) => `<option>${esc(t.name)}</option>`).join("");
-    const t = TOURS.find((x) => x.id === params.get("tour")); if (t) tourSel.value = t.name;
+    const pkgs = typeof PACKAGES !== "undefined" ? PACKAGES.map((p) => ({ id: p.id, name: `${p.name} (${p.duration})` })) : [];
+    tourSel.innerHTML = `<option value="">Not sure yet</option>`
+      + (pkgs.length ? `<optgroup label="Packages">${pkgs.map((p) => `<option>${esc(p.name)}</option>`).join("")}</optgroup><optgroup label="Tours">` : "")
+      + TOURS.map((t) => `<option>${esc(t.name)}</option>`).join("") + (pkgs.length ? "</optgroup>" : "");
+    const t = [...pkgs, ...TOURS].find((x) => x.id === params.get("tour")); if (t) tourSel.value = t.name;
 
     $$("[data-step]", form).forEach((b) => b.addEventListener("click", () => {
       const [key, dir] = b.dataset.step.split(":"), [min, max] = limits[key];
@@ -747,6 +796,16 @@
     form.addEventListener("submit", (e) => e.preventDefault());
   }
 
+  /* ---------- Totals: keep "13 destinations" / "21 tours" in step with data.js ---------- */
+  function initTotals() {
+    const totals = { places: typeof PLACES !== "undefined" ? PLACES.length : null, tours: typeof TOURS !== "undefined" ? TOURS.length : null };
+    $$("[data-total]").forEach((el) => {
+      const n = totals[el.dataset.total]; if (n == null) return;
+      if (el.hasAttribute("data-count")) el.dataset.count = n;
+      el.textContent = n;
+    });
+  }
+
   /* ---------- Boot ---------- */
   document.addEventListener("DOMContentLoaded", () => {
     renderChrome();
@@ -758,6 +817,7 @@
     initMoodFilter();
     initQuiz();
     initTours();
+    initPackages();
     initRing();
     initSeasons();
     initMonths();
@@ -765,6 +825,7 @@
     initGallery();
     initPlanner();
     initContactForm();
+    initTotals();
     initCounters();
     initParallax();
     initRipple();

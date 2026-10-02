@@ -151,6 +151,90 @@ const TOURS = [
     days: "Any length", price: "On request", includes: "Whatever you need" }
 ];
 
+/* Signature packages: full itineraries with Standard / Deluxe / Executive rates.
+   Prices in US dollars, converted from PKR at about 280 PKR = $1 and rounded to the nearest $10.
+   Shown on the home page and at the top of the Tours page. */
+const PACKAGES = [
+  { id: "skardu-shigar-5d", name: "Premium Skardu Tour Package", subtitle: "Discover the Beauty of Skardu & Shigar Valley",
+    duration: "5 Days / 4 Nights", type: "Premium Skardu Tour", image: "images/upper-kachura-lake.jpg",
+    intro: "Experience the breathtaking beauty of Skardu with an unforgettable journey through crystal-clear lakes, majestic mountains, vast alpine landscapes, spectacular waterfalls, and the golden dunes of the Cold Desert. From the enchanting Shangri-La Lake to the breathtaking Deosai National Park, discover the natural wonders of Gilgit-Baltistan with comfort, convenience, and professional local tour assistance.",
+    regions: [
+      { name: "Skardu & Kachura Valley", stops: ["Upper Kachura Lake (Shangri-La)", "Soq Valley"] },
+      { name: "Deosai National Park", stops: ["Deosai Plains", "Spectacular mountain landscapes and alpine scenery"] },
+      { name: "Kharmang Valley", stops: ["Manthokha Waterfall", "Chocolate Rock", "Sermink Valley"] },
+      { name: "Shigar Valley", stops: ["Shigar Fort", "Sarfaranga Cold Desert", "Blind Lake"] }
+    ],
+    includes: [
+      "Private Transport: Luxury Prado TX / TZ",
+      "Fuel Charges: Fully Included",
+      "Professional Driver: Driver charges included",
+      "All Toll Taxes & Road Charges",
+      "Experienced Tour Support: Professional assistance throughout the journey",
+      "Hotel Accommodation: According to selected package category",
+      "Daily Breakfast: Included with hotel accommodation"
+    ],
+    excludes: [
+      "Airfare / Flight Tickets",
+      "Lunch, Dinner & Other Meals",
+      "Entrance Fees / Attraction Tickets",
+      "Personal Expenses",
+      "Any services not specifically mentioned under inclusions"
+    ],
+    tiers: [
+      { name: "Standard Package", price: "$520" },
+      { name: "Deluxe Package", price: "$700" },
+      { name: "Executive Package", price: "$790" }
+    ],
+    rateNote: "Package prices are subject to selected accommodation, room category, vehicle availability, and booking confirmation.",
+    notes: [
+      "Advance booking is recommended to secure your preferred hotel and vehicle.",
+      "Hotel availability and room categories will be confirmed at the time of reservation.",
+      "Customized itineraries and private tour arrangements are available upon request."
+    ] },
+
+  { id: "skardu-hunza-8d", name: "Skardu & Hunza Premium Tour Package", subtitle: "Explore the Majestic Beauty of Skardu & Hunza",
+    duration: "8 Days / 7 Nights", type: "Private Customized Tour", image: "images/passu-cones.jpg",
+    intro: "Discover the breathtaking landscapes of Northern Pakistan, from the crystal-clear lakes of Skardu and the vast plains of Deosai to the majestic mountains, historic forts, and spectacular valleys of Hunza. Enjoy a memorable journey with comfortable private transportation, experienced local support, quality hotel accommodation, and a personalized travel experience.",
+    regions: [
+      { name: "Skardu & Shigar Valley", stops: ["Upper Kachura Lake & Shangri-La Resort", "Soq Valley", "Deosai National Park", "Shigar Valley & Shigar Fort", "Manthokha Waterfall", "Sarfaranga Cold Desert"] },
+      { name: "Hunza Valley", stops: ["Altit Fort", "Baltit Fort", "Hunza Valley & Scenic Viewpoints", "Khunjerab Pass – Pak-China Border"] }
+    ],
+    includes: [
+      "Private Transportation: Dedicated Prado TX / TZ throughout the tour",
+      "Fuel Charges: Complete fuel expenses included",
+      "Professional Driver: Experienced driver with all driver charges included",
+      "Toll Taxes & Road Charges: All applicable toll taxes and road charges included",
+      "Experienced Tour Support: Professional travel assistance and coordination throughout your journey",
+      "Hotel Accommodation: Comfortable accommodation according to your selected package and hotel category",
+      "Daily Breakfast: Breakfast included with hotel accommodation"
+    ],
+    excludes: [
+      "Airfare / Flight Tickets",
+      "Lunch, Dinner & Other Meals",
+      "Entrance Fees / Attraction Tickets",
+      "Personal Expenses",
+      "Special Activities & Optional Excursions",
+      "Any service or expense not specifically mentioned under Services Included"
+    ],
+    tiers: [
+      { name: "Standard Package", price: "$950" },
+      { name: "Deluxe Package", price: "$1,160" },
+      { name: "Executive Package", price: "$1,410" }
+    ],
+    rateNote: "Package rates are based on the selected accommodation and service category. Hotel availability, room category, and vehicle allocation will be confirmed at the time of booking. Rates may vary depending on travel dates and availability.",
+    notes: [] }
+];
+
+/* "Why travel with STAT?" points, shown under the packages */
+const WHY_STAT = [
+  "Local Expertise & Professional Tour Management",
+  "Private & Customized Travel Experience",
+  "Comfortable Transportation",
+  "Quality Accommodation Options",
+  "Personalized Travel Assistance",
+  "Explore Northern Pakistan with Local Experience"
+];
+
 const SEASONS = [
   { id: "spring", image: "images/basho-valley.jpg", name: "Spring", months: "March to May", color: "#B35A6E",
     title: "The valleys bloom.",
@@ -170,19 +254,20 @@ const SEASONS = [
     good: "Snow lovers and slow travel" }
 ];
 
+/* Each month has its own photo (img). Without one it falls back to its season's photo. */
 const MONTHS = [
-  { m: "Jan", s: "winter", note: "Deep winter. Snow in the valleys and frozen lakes. Very cold nights." },
-  { m: "Feb", s: "winter", note: "Still cold, often with bright, clear days. Quiet and peaceful." },
-  { m: "Mar", s: "spring", note: "Winter loosens its grip. The first blossoms usually appear late in the month." },
-  { m: "Apr", s: "spring", note: "Blossom season. Orchards turn pink and white across the valleys." },
-  { m: "May", s: "spring", note: "Green fields and pleasant days. A lovely time before the summer rush." },
-  { m: "Jun", s: "summer", note: "Deosai usually starts to open and the trekking season begins." },
-  { m: "Jul", s: "summer", note: "Peak season. Wildflowers on Deosai and warm days by the lakes." },
-  { m: "Aug", s: "summer", note: "Warm and busy. Book stays early and enjoy long daylight hours." },
-  { m: "Sep", s: "autumn", note: "Fewer crowds, cool evenings and the first hints of autumn colour." },
-  { m: "Oct", s: "autumn", note: "Golden poplars everywhere. A favourite month for photographers." },
-  { m: "Nov", s: "autumn", note: "The last colours fade and the cold returns. Pack warm." },
-  { m: "Dec", s: "winter", note: "Winter settles in. Snow, woodsmoke and quiet roads." }
+  { m: "Jan", s: "winter", img: "images/trek-skardu-summit.jpg", note: "Deep winter. Snow in the valleys and frozen lakes. Very cold nights." },
+  { m: "Feb", s: "winter", img: "images/k2.jpg", note: "Still cold, often with bright, clear days. Quiet and peaceful." },
+  { m: "Mar", s: "spring", img: "images/katpana-desert.jpg", note: "Winter loosens its grip. The first blossoms usually appear late in the month." },
+  { m: "Apr", s: "spring", img: "images/shigar-fort.jpg", note: "Blossom season. Orchards turn pink and white across the valleys." },
+  { m: "May", s: "spring", img: "images/basho-valley.jpg", note: "Green fields and pleasant days. A lovely time before the summer rush." },
+  { m: "Jun", s: "summer", img: "images/deosai-plains.jpg", note: "Deosai usually starts to open and the trekking season begins." },
+  { m: "Jul", s: "summer", img: "images/deosai-lake.jpg", note: "Peak season. Wildflowers on Deosai and warm days by the lakes." },
+  { m: "Aug", s: "summer", img: "images/shangrila-lake.jpg", note: "Warm and busy. Book stays early and enjoy long daylight hours." },
+  { m: "Sep", s: "autumn", img: "images/satpara-lake.jpg", note: "Fewer crowds, cool evenings and the first hints of autumn colour." },
+  { m: "Oct", s: "autumn", img: "images/upper-kachura-lake.jpg", note: "Golden poplars everywhere. A favourite month for photographers." },
+  { m: "Nov", s: "autumn", img: "images/kharpocho-fort.jpg", note: "The last colours fade and the cold returns. Pack warm." },
+  { m: "Dec", s: "winter", img: "images/hero-main.jpg", note: "Winter settles in. Snow, woodsmoke and quiet roads." }
 ];
 
 const FACTS = [
