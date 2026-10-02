@@ -350,6 +350,8 @@
       <div class="modal-body">
         <div class="area">${esc(p.area)}</div>
         <h3>${esc(p.name)}</h3>
+        <div class="place-price">From <b>${esc(p.price)}</b> <span>${esc(p.unit || "per day trip")}</span></div>
+        <p class="price-note">${p.unit ? "Trekking support, local guide and transport. Ask us for dates." : "Private Prado from Skardu with driver, fuel and tolls, for your whole group. Entrance fees not included."}</p>
         <p>${esc(p.detail)}</p>
         <div class="actions">
           <button class="btn btn-primary" data-act="wa">${I.whatsapp}Ask us about this place</button>
@@ -377,7 +379,7 @@
         <button class="photo-card pop-in" type="button" data-id="${p.id}" style="--d:${i * 90}ms">
           <div class="img" style="${bg(p.image)}"></div>
           <span class="tag">${esc(p.area)}</span>
-          <div class="body"><h3>${esc(p.name)}</h3><p>${esc(p.text)}</p><span class="more">Take a look ${I.arrow}</span></div>
+          <div class="body"><h3>${esc(p.name)}</h3><div class="place-price">From <b>${esc(p.price)}</b> <span>${esc(p.unit || "per day trip")}</span></div><p>${esc(p.text)}</p><span class="more">Take a look ${I.arrow}</span></div>
         </button>`).join("");
       $$(".photo-card", grid).forEach(tilt);
       if (lineEl) { lineEl.textContent = moods.find((m) => m.id === current).line; lineEl.classList.remove("pop-in"); void lineEl.offsetWidth; lineEl.classList.add("pop-in"); }
@@ -464,8 +466,11 @@
             <h3>${esc(t.name)}</h3>
             <p>${esc(t.blurb)}</p>
             <ol class="route" aria-label="Route">${t.stops.map((s) => `<li>${esc(s)}</li>`).join("")}</ol>
-            <p class="tour-includes">Includes: ${esc(t.includes)}</p>
-            <div class="tour-price">${priceText(t)}</div>
+            ${t.rates ? "" : `<p class="tour-includes">Includes: ${esc(t.includes)}</p>`}
+            ${t.rates
+              ? `<table class="tour-rates" aria-label="Prices by trip length"><tbody>${t.rates.map((r) => `<tr><th scope="row">${esc(r.days)}</th><td>${esc(r.price)}</td></tr>`).join("")}</tbody></table>
+                 <p class="tour-rates-note">Standard package, private Prado, hotels and breakfast, for your whole group.</p>`
+              : `<div class="tour-price">${priceText(t)}</div>`}
             <div class="actions">
               <button class="btn btn-primary" type="button" data-tour="${t.id}">${I.whatsapp}Ask about this tour</button>
               <button class="btn btn-ghost" type="button" data-flip>Flip back</button>
@@ -569,7 +574,7 @@
     ring.innerHTML = PLACES.map((p, i) => `
       <button class="ring-card" type="button" data-id="${p.id}" tabindex="-1" aria-label="${esc(p.name)}">
         <div class="img" style="${bgStack(p)}"></div>
-        <div class="body"><div class="area">${esc(p.area)}</div><h3>${esc(p.name)}</h3></div>
+        <div class="body"><div class="area">${esc(p.area)}</div><h3>${esc(p.name)}</h3><div class="place-price">From <b>${esc(p.price)}</b></div></div>
       </button>`).join("");
     const cards = $$(".ring-card", ring);
     function layout() {

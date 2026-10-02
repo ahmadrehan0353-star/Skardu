@@ -9,44 +9,47 @@
    To use your own photo for a place or tour, put it in /images
    and set image: "images/your-photo.jpg". */
 
+/* Destination prices, in US dollars, priced like the private packages below: a private Prado day trip from Skardu
+   with driver, fuel and tolls, per vehicle (not per person). Entrance fees are not included. Shorter, closer trips cost
+   less; Deosai, Basho, Kharmang and Khaplu are full days on rougher roads. The road to K2 uses the K2 Base Camp Trek price. */
 const PLACES = [
-  { id: "upper-kachura", name: "Upper Kachura Lake", area: "Kachura", moods: ["calm"], tint: "#2D6E7E", image: "images/upper-kachura-lake.jpg",
+  { id: "upper-kachura", name: "Upper Kachura Lake", area: "Kachura", moods: ["calm"], tint: "#2D6E7E", image: "images/upper-kachura-lake.jpg", price: "$55",
     text: "Clear, deep water ringed by trees. Row out and hear nothing but wind.",
     detail: "A quiet lake above the Shangrila resort, loved for boat rides, trout and long, lazy afternoons on the shore." },
-  { id: "shangrila", name: "Shangrila (Lower Kachura)", area: "Kachura", moods: ["calm", "family"], tint: "#3F7E9E", image: "images/shangrila-lake.jpg",
+  { id: "shangrila", name: "Shangrila (Lower Kachura)", area: "Kachura", moods: ["calm", "family"], tint: "#3F7E9E", image: "images/shangrila-lake.jpg", price: "$55",
     text: "The heart-shaped lake with its famous resort and gardens.",
     detail: "Easy paths, gardens and pedal boats make this one of the most relaxed stops near Skardu, especially with children." },
-  { id: "satpara", name: "Satpara Lake", area: "Above Skardu town", moods: ["calm", "family"], tint: "#2F8C8A", image: "images/satpara-lake.jpg",
+  { id: "satpara", name: "Satpara Lake", area: "Above Skardu town", moods: ["calm", "family"], tint: "#2F8C8A", image: "images/satpara-lake.jpg", price: "$40",
     text: "Turquoise water just above town, perfect for a slow afternoon.",
     detail: "Close to Skardu and easy to reach, Satpara is a good first stop on arrival day or a simple picnic outing." },
-  { id: "sheosar", name: "Sheosar Lake", area: "Deosai", moods: ["calm", "adventure"], tint: "#4F74A3", image: "images/sheosar-lake.jpg",
+  { id: "sheosar", name: "Sheosar Lake", area: "Deosai", moods: ["calm", "adventure"], tint: "#4F74A3", image: "images/sheosar-lake.jpg", price: "$100",
     text: "A high lake on Deosai that mirrors the sky on still days.",
     detail: "Usually visited on a Deosai day trip. Bring warm layers: it is cold up there even in summer." },
-  { id: "deosai", name: "Deosai Plains", area: "Deosai National Park", moods: ["adventure"], tint: "#6A8A45", image: "images/deosai-plains.jpg",
+  { id: "deosai", name: "Deosai Plains", area: "Deosai National Park", moods: ["adventure"], tint: "#6A8A45", image: "images/deosai-plains.jpg", price: "$95",
     text: "A vast high plateau of wildflowers and streams.",
     detail: "One of the highest plateaus in the world and a protected home for the Himalayan brown bear. Usually open in summer only." },
-  { id: "katpana", name: "Katpana Cold Desert", area: "Near Skardu airport", moods: ["adventure", "family"], tint: "#B98648", image: "images/katpana-desert.jpg",
+  { id: "katpana", name: "Katpana Cold Desert", area: "Near Skardu airport", moods: ["adventure", "family"], tint: "#B98648", image: "images/katpana-desert.jpg", price: "$40",
     text: "Sand dunes framed by snowy peaks. Jeeps, quad bikes and sunsets.",
     detail: "A desert that can be dusted with snow in winter. Go late afternoon for soft light and cooler sand." },
-  { id: "k2-road", name: "The road to K2", area: "Via Askole and the Baltoro Glacier", moods: ["adventure"], tint: "#34495E", image: "images/k2.jpg",
+  { id: "k2-road", name: "The road to K2", area: "Via Askole and the Baltoro Glacier", moods: ["adventure"], tint: "#34495E", image: "images/k2.jpg", price: "$2,300", unit: "for the 21-day trek",
     text: "The great trek toward K2 Base Camp begins with Skardu.",
     detail: "A serious multi-week trek for fit, prepared travellers. We can help with guides, porters, permits and logistics." },
-  { id: "basho", name: "Basho Valley", area: "Basho", moods: ["adventure"], tint: "#4C7A58", image: "images/basho-valley.jpg",
+  { id: "basho", name: "Basho Valley", area: "Basho", moods: ["adventure"], tint: "#4C7A58", image: "images/basho-valley.jpg", price: "$85",
     text: "Forests, meadows and quiet camping off the beaten track.",
     detail: "A green valley for travellers who want pine forest, streams and a night under the stars away from the crowds." },
-  { id: "shigar-fort", name: "Shigar Fort", area: "Shigar", moods: ["culture"], tint: "#94623D", image: "images/shigar-fort.jpg",
+  { id: "shigar-fort", name: "Shigar Fort", area: "Shigar", moods: ["culture"], tint: "#94623D", image: "images/shigar-fort.jpg", price: "$60",
     text: "A restored royal palace among orchards, now a heritage stay.",
     detail: "The old palace of the Rajas of Shigar, carefully restored. Visit for the carved wood and gardens, or stay the night." },
-  { id: "khaplu", name: "Khaplu Palace", area: "Khaplu, Ghanche", moods: ["culture"], tint: "#7A5638", image: "images/khaplu-palace.jpg",
+  { id: "khaplu", name: "Khaplu Palace", area: "Khaplu, Ghanche", moods: ["culture"], tint: "#7A5638", image: "images/khaplu-palace.jpg", price: "$90",
     text: "An elegant Balti palace of carved wood above the Shyok River.",
     detail: "Pair it with the old Chaqchan Mosque and the orchards of Khaplu town for a full heritage day." },
-  { id: "kharpocho", name: "Kharpocho Fort", area: "Skardu town", moods: ["culture"], tint: "#8A5A47", image: "images/kharpocho-fort.jpg",
+  { id: "kharpocho", name: "Kharpocho Fort", area: "Skardu town", moods: ["culture"], tint: "#8A5A47", image: "images/kharpocho-fort.jpg", price: "$35",
     text: "The old fort on the rock above town, with wide views of the Indus.",
     detail: "A short but steep climb rewards you with a view over Skardu, the Indus and the desert beyond." },
-  { id: "chaqchan", name: "Chaqchan Mosque", area: "Khaplu", moods: ["culture"], tint: "#6B5877", image: "images/chaqchan-mosque.jpg",
+  { id: "chaqchan", name: "Chaqchan Mosque", area: "Khaplu", moods: ["culture"], tint: "#6B5877", image: "images/chaqchan-mosque.jpg", price: "$90",
     text: "One of the oldest mosques in the region.",
     detail: "A beautiful example of Balti wooden architecture. Please dress modestly and ask before taking photos." },
-  { id: "manthokha", name: "Manthokha Waterfall", area: "Kharmang", moods: ["family"], tint: "#3B7C88", image: "images/manthokha-waterfall.jpg",
+  { id: "manthokha", name: "Manthokha Waterfall", area: "Kharmang", moods: ["family"], tint: "#3B7C88", image: "images/manthokha-waterfall.jpg", price: "$85",
     text: "A roaring waterfall with shady spots and fresh trout nearby.",
     detail: "An easy day out with food by the water. Children love the spray on a hot day." }
 ];
@@ -59,23 +62,26 @@ const MOODS = [
   { id: "family", label: "Easy family fun", line: "For the ones travelling with little explorers." }
 ];
 
+/* Tours with "rates": estimated Standard-package prices in US dollars for a private trip from Skardu
+   (Prado with driver and fuel, hotels and breakfast, for the whole group), worked out from the signature
+   packages below: $520 for 5 days in Skardu and $950 for 8 days with Hunza, roughly $100 to $120 a day. */
 const TOURS = [
   { id: "lakes", name: "Lakes of Skardu", tint: "#2D6E7E", image: "images/upper-kachura-lake.jpg",
     stops: ["Satpara Lake", "Shangrila", "Upper Kachura Lake", "Katpana Cold Desert"],
     blurb: "Slow mornings by still water, boat rides under the peaks and a desert sunset to finish.",
-    days: "Flexible", price: "On request", includes: "Local guide, airport pickup and drop, and your choice of transport. Standard, Deluxe or Executive package." },
-  { id: "deosai", name: "Deosai and Sheosar", tint: "#6A8A45", image: "images/deosai-lake.jpg",
+    days: "3–7", price: "$290", rates: [{ days: "3 days", price: "$290" }, { days: "5 days", price: "$470" }, { days: "7 days", price: "$650" }], includes: "Local guide, airport pickup and drop, and your choice of transport. Standard, Deluxe or Executive package." },
+  { id: "deosai", name: "Deosai and Sheosar", tint: "#6A8A45", image: "images/deosai-lake.jpg", price: "$95",
     stops: ["Skardu", "Deosai Plains", "Sheosar Lake", "Skardu"],
     blurb: "Cross the high plains by jeep, look out for brown bears and wildflowers, and picnic by Sheosar.",
-    days: "Flexible", price: "On request", includes: "Local guide, airport pickup and drop, and your choice of transport. Standard, Deluxe or Executive package." },
+    days: "3–7", price: "$330", rates: [{ days: "3 days", price: "$330" }, { days: "5 days", price: "$520" }, { days: "7 days", price: "$720" }], includes: "Local guide, airport pickup and drop, and your choice of transport. Standard, Deluxe or Executive package." },
   { id: "heritage", name: "Shigar and Khaplu Heritage", tint: "#94623D", image: "images/khaplu-palace.jpg",
     stops: ["Kharpocho Fort", "Shigar Fort", "Khaplu Palace", "Chaqchan Mosque"],
     blurb: "Royal forts, carved-wood palaces, old mosques and the orchards that surround them.",
-    days: "Flexible", price: "On request", includes: "Local guide, airport pickup and drop, and your choice of transport. Standard, Deluxe or Executive package." },
+    days: "3–7", price: "$310", rates: [{ days: "3 days", price: "$310" }, { days: "5 days", price: "$500" }, { days: "7 days", price: "$700" }], includes: "Local guide, airport pickup and drop, and your choice of transport. Standard, Deluxe or Executive package." },
   { id: "family", name: "Family Getaway", tint: "#3B7C88", image: "images/manthokha-waterfall.jpg",
     stops: ["Shangrila", "Manthokha Waterfall", "Satpara Lake", "Katpana Cold Desert"],
     blurb: "Short drives, easy walks and plenty of time to play. Built around the kids' energy.",
-    days: "Flexible", price: "On request", includes: "Local guide, airport pickup and drop, and your choice of transport. Standard, Deluxe or Executive package." },
+    days: "3–7", price: "$300", rates: [{ days: "3 days", price: "$300" }, { days: "5 days", price: "$490" }, { days: "7 days", price: "$680" }], includes: "Local guide, airport pickup and drop, and your choice of transport. Standard, Deluxe or Executive package." },
   { id: "k2", name: "K2 Base Camp Trek", tint: "#34495E", image: "images/k2.jpg",
     stops: ["Skardu", "Askole", "Baltoro Glacier", "Concordia", "K2 Base Camp"],
     blurb: "A once-in-a-lifetime trek for fit, prepared travellers. We handle the logistics.",
@@ -148,7 +154,7 @@ const TOURS = [
   { id: "custom", name: "Custom or honeymoon", tint: "#6B5877", image: "images/sheosar-lake.jpg",
     stops: ["You choose"],
     blurb: "Tell us who's coming and what you love. We'll build the route, stays and transport around you.",
-    days: "Any length", price: "On request", includes: "Whatever you need" }
+    days: "5–15", price: "$520", rates: [{ days: "5 days", price: "$520" }, { days: "10 days", price: "$1,150" }, { days: "15 days", price: "$1,650" }], includes: "Whatever you need" }
 ];
 
 /* Signature packages: full itineraries with Standard / Deluxe / Executive rates.
@@ -189,7 +195,7 @@ const PACKAGES = [
     notes: [
       "Advance booking is recommended to secure your preferred hotel and vehicle.",
       "Hotel availability and room categories will be confirmed at the time of reservation.",
-      "Customized itineraries and private tour arrangements are available upon request."
+      "Customized itineraries and private tour arrangements are available. Just ask us."
     ] },
 
   { id: "skardu-hunza-8d", name: "Skardu & Hunza Premium Tour Package", subtitle: "Explore the Majestic Beauty of Skardu & Hunza",

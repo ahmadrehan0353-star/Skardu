@@ -576,3 +576,47 @@ html { overflow-x: clip; } body { overflow-x: clip; }
   .pkg-cols, .why-list { grid-template-columns: 1fr; }
   .pkg-rates td { font-size: 22px; }
 }
+/* Destination prices */
+.place-price { margin-top: 6px; font-size: 15px; color: #DCE8EC; }
+.place-price b { font-size: 20px; color: var(--apricot); }
+.place-price span { font-size: 13px; }
+.modal-body .place-price { margin-top: 0; color: var(--indus); }
+.modal-body .place-price b { font-size: 26px; color: var(--apricot-dark); }
+.ring-card .place-price { margin-top: 4px; }
+
+/* Home page: tighter sections so there is less to scroll */
+body[data-page="home"] .section { padding-block: clamp(48px, 6vw, 80px); }
+body[data-page="home"] .section-head { margin-bottom: clamp(20px, 3vw, 32px); }
+body[data-page="home"] #tour-grid { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+body[data-page="home"] #tour-grid .tour3d, body[data-page="home"] #tour-grid .flipper { min-height: 500px; }
+body[data-page="home"] #tour-grid .back { padding: 22px; gap: 10px; overflow-y: auto; }
+body[data-page="home"] #tour-grid .back h3 { font-size: 28px; }
+body[data-page="home"] #tour-grid .front h3 { font-size: clamp(28px, 2.4vw, 36px); }
+
+/* Home page on phones: swipe sideways through tours, packages and places instead of scrolling past them */
+@media (max-width: 700px) {
+  body[data-page="home"] #tour-grid, body[data-page="home"] #package-list, body[data-page="home"] #place-grid {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 80%; grid-template-columns: none;
+    overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+    margin-inline: calc(var(--pad) * -1); padding: 4px var(--pad) 18px; scroll-padding-inline: var(--pad); scrollbar-width: none;
+  }
+  body[data-page="home"] #tour-grid::-webkit-scrollbar, body[data-page="home"] #package-list::-webkit-scrollbar, body[data-page="home"] #place-grid::-webkit-scrollbar { display: none; }
+  body[data-page="home"] #tour-grid > *, body[data-page="home"] #package-list > *, body[data-page="home"] #place-grid > * { scroll-snap-align: start; }
+  body[data-page="home"] #mood-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: calc(var(--pad) * -1); padding-inline: var(--pad); }
+  body[data-page="home"] #mood-chips .chip { flex: none; white-space: nowrap; }
+}
+.modal-body .price-note { margin-top: -6px; font-size: 14px; color: #5B6F77; }
+
+/* Price by trip length, on the back of tour cards */
+.tour-rates { width: 100%; border-collapse: collapse; margin-top: auto; font-size: 15px; }
+.tour-rates th, .tour-rates td { padding: 6px 0; border-bottom: 1px solid #E3EAED; text-align: left; font-weight: 500; }
+.tour-rates td { text-align: right; font-family: var(--display); font-weight: 800; font-size: 20px; color: var(--apricot-dark); }
+.tour-rates-note { font-size: 12px; color: #5B6F77; }
+.tour3d .back:has(.tour-rates) { gap: 10px; }
+.tour3d .back:has(.tour-rates) .actions { flex-direction: row; gap: 8px; }
+.tour3d .back:has(.tour-rates) .actions .btn { padding-inline: 12px; font-size: 14px; }
+.tour3d .back:has(.tour-rates) .tour-rates th, .tour3d .back:has(.tour-rates) .tour-rates td { padding: 4px 0; }
+.tour3d .back .tour-rates-note { font-size: 12px; line-height: 1.4; color: #5B6F77; }
+body[data-page="home"] #tour-grid .tour3d, body[data-page="home"] #tour-grid .flipper { min-height: 560px; }
+body[data-page="home"] #tour-grid .back:has(.tour-rates) > p:not(.tour-rates-note) { display: none; }
+body[data-page="home"] #tour-grid .back:has(.tour-rates) .actions { flex-direction: column; }
