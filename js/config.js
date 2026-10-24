@@ -1,7 +1,6 @@
 /* ==========================================================
    EDIT THIS FILE FIRST
    Everything here appears across the whole website.
-   Filled in from your flyer. Still empty: office hours, Facebook, Instagram.
    ========================================================== */
 const SITE_CONFIG = {
   businessName: "Skardu Travelers & Tours",
@@ -17,12 +16,12 @@ const SITE_CONFIG = {
   whatsapp: "+92 355 6060001",           // WhatsApp buttons open a chat with this number
   email: "skardutravelersandtours@gmail.com",
   address: "Agha Hadi Chowk, near Uswa College, Skardu, Gilgit-Baltistan",
-  hours: "",                             // not on the flyer. Add e.g. "Every day, 9am to 9pm" to show an Office hours card
+  hours: "",                             // e.g. "Every day, 9am to 9pm"
 
   // Google Maps search for the office address
   mapLink: "https://www.google.com/maps/search/?api=1&query=Agha+Hadi+Chowk+Uswa+College+Skardu",
 
-  // Optional social links (leave "" to hide). The flyer shows the icons but not the page links.
-  facebook: "",
-  instagram: ""
+  // Social links
+  facebook: "https://www.facebook.com/share/19qvBKMefR/",
+  instagram: "https://www.instagram.com/skardutrevelersandtours?mdxt=Z2xiemZha21waHR4"
 };
