@@ -29,7 +29,9 @@
     left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>',
     right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>',
     arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
-    up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>'
+    up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>',
+    facebook: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H7.7v-3H10V9.8c0-2.2 1.3-3.4 3.3-3.4 1.1 0 2.2.2 2.2.2V9h-1.2c-1.1 0-1.4.7-1.4 1.4V12h2.8l-.5 3H13v6.8c4.56-.93 8-4.96 8-9.8z"/></svg>',
+    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>'
   };
 
   /* ---------- Contact helpers ---------- */
@@ -117,8 +119,8 @@
     if (footer) {
       footer.className = "site-footer";
       const social = [
-        C.facebook ? `<li><a href="${esc(C.facebook)}" target="_blank" rel="noopener">Facebook</a></li>` : "",
-        C.instagram ? `<li><a href="${esc(C.instagram)}" target="_blank" rel="noopener">Instagram</a></li>` : ""
+        C.facebook ? `<li><a href="${esc(C.facebook)}" target="_blank" rel="noopener" aria-label="Facebook">${I.facebook} Facebook</a></li>` : "",
+        C.instagram ? `<li><a href="${esc(C.instagram)}" target="_blank" rel="noopener" aria-label="Instagram">${I.instagram} Instagram</a></li>` : ""
       ].join("");
       footer.innerHTML = `
         <div class="wrap">
